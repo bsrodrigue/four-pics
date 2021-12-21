@@ -1,7 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
 
-
-
 const style = {
     letterSlot: {
         backgroundColor: 'grey',
@@ -10,7 +8,6 @@ const style = {
         width: '128px',
     }
 }
-
 interface Props {
     slotLetters: string[];
 }
