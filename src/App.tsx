@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ProblemPictures from './components/ProblemPictures';
+import data from './data';
+import { Problem } from './interfaces';
+
+const problems: Problem[] = data.problems;
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        problems.map((problem: Problem, index: number) => {
+          const { pictures, word } = problem;
+          return (
+            <ProblemPictures key={index} pictures={pictures} />
+          );
+        })
+      }
     </div>
   );
 }
