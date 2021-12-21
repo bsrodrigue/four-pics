@@ -1,19 +1,30 @@
 import { Container, Row, Col } from 'react-bootstrap';
 
+
+
+const style = {
+    letterSlot: {
+        backgroundColor: 'grey',
+        border: '1px black solid',
+        height: '128px',
+        width: '128px',
+    }
+}
+
 interface Props {
-    word: string;
+    slotLetters: string[];
 }
 
 function LetterSlots(props: Props) {
-    const { word } = props;
+    const { slotLetters } = props;
 
     return (
         <Container>
             <Row>
                 {
-                    word.split('').map((letter: string, index: number) => {
+                    slotLetters.map((letter: string, index: number) => {
                         return (
-                            <Col>{letter}</Col>
+                            <Col style={style.letterSlot} key={index}>{letter}</Col>
                         )
                     })
                 }
