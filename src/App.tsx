@@ -1,4 +1,3 @@
-import './App.css';
 import { ProblemPictures, LetterSlots } from './components';
 import data from './data';
 import { Problem } from './interfaces';
