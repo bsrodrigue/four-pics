@@ -4,7 +4,7 @@ const data: GameData = {
     problems: [
         {
             pictures: [
-                require('../img/boobs.jpg'),
+                require('../img/blonde.jpg'),
                 require('../img/constellation.jpeg'),
                 require('../img/heart.png'),
                 require('../img/key.jpeg'),

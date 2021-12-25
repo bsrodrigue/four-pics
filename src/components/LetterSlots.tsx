@@ -1,27 +1,23 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import { Slot } from '../interfaces';
+import LetterSlot from './LetterSlot';
 
-const style = {
-    letterSlot: {
-        backgroundColor: 'grey',
-        border: '1px black solid',
-        height: '128px',
-        width: '128px',
-    }
-}
 interface Props {
-    slotLetters: string[];
+    slots: Slot[];
 }
 
 function LetterSlots(props: Props) {
-    const { slotLetters } = props;
+    const { slots } = props;
 
     return (
         <Container>
             <Row>
                 {
-                    slotLetters.map((letter: string, index: number) => {
+                    slots.map((slot: Slot, index: number) => {
                         return (
-                            <Col style={style.letterSlot} key={index}>{letter}</Col>
+                            <Col key={index} style={{ display: 'flex', justifyContent: 'center' }} >
+                                <LetterSlot isPicker={false} slot={slot} />
+                            </Col>
                         )
                     })
                 }

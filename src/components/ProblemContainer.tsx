@@ -1,42 +1,30 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { LetterSlots, ProblemPictures } from ".";
-import { Problem } from "../interfaces";
-
-const style = {
-    letterSlot: {
-        backgroundColor: 'grey',
-        border: '1px black solid',
-        height: '128px',
-        width: '128px',
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: '3em',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-
-}
+import LetterSlot from './LetterSlot';
+import { GameSlots, Problem, Slot } from "../interfaces";
 
 interface Props {
     problem: Problem;
-    slotLetters: string[];
-    pickerLetters: string[];
+    slots: GameSlots;
+    pushLetter: Function;
 }
 
 
 function ProblemContainer(props: Props) {
-    const { problem: { pictures }, slotLetters, pickerLetters } = props;
+    const { problem: { pictures }, slots: { targetSlots, pickerSlots }, pushLetter } = props;
     return (
         <>
             <ProblemPictures pictures={pictures} />
-            <LetterSlots slotLetters={slotLetters} />
+            <LetterSlots slots={targetSlots} />
+            <hr />
             <Container>
                 <Row>
                     {
-                        pickerLetters.map((letter: string, index: number) => {
+                        pickerSlots.map((slot: Slot, index: number) => {
                             return (
-                                <Col style={style.letterSlot} key={index}>{letter}</Col>
+                                <Col key={index}>
+                                    <LetterSlot isPicker pushLetter={pushLetter} slot={slot} />
+                                </Col>
                             )
                         })
                     }

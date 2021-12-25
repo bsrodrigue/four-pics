@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+}
+
+.remove {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}
