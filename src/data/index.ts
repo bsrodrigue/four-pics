@@ -1,21 +1,17 @@
-import type { GameData } from '../interfaces';
+import type { GameData, Problem } from '../interfaces';
+import rawGameData from './game_data.json';
 
+async function parseGameData(): Promise<Problem[]> {
+    let problems: Problem[] = await rawGameData.map((problem: Problem) => {
+        let pictures = problem.pictures;
+        let loadedPictures = pictures.map((picture: string) => picture);
+        return { ...problem, pictures: loadedPictures };
+    });
+    return problems;
+}
 
-
-
-const data: GameData = {
-    problems: [
-        {
-            pictures: [
-                require('../img/problems/fairytail/lucy/blonde.jpg'),
-                require('../img/problems/fairytail/lucy/constellation.jpeg'),
-                require('../img/problems/fairytail/lucy/heart.png'),
-                require('../img/problems/fairytail/lucy/key.jpeg'),
-            ],
-            franchise: 'fairytail',
-            word: 'lucy',
-        }
-    ]
-};
-
-export default data;
+export async function gameData(): Promise<GameData> {
+    const problems = await parseGameData();
+    const data: GameData = { problems };
+    return data;
+}

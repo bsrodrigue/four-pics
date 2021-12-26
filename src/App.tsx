@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { ProblemContainer } from './components';
-import data from './data';
+import { gameData } from './data';
 import { GameSlots, Problem, Slot } from './interfaces';
 import { insertRandomAlphabetLetters, SlotHelper } from './tools';
 import { Alert, Container, Image } from 'react-bootstrap';
 import './App.css'
 
-const INITIAL_PROBLEMS: Problem[] = data.problems;
+
+const INITIAL_PROBLEMS: Problem[] = [];
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
 
@@ -50,6 +51,18 @@ function App() {
 
 
   useEffect(() => {
+    async function loadGameData() {
+      const data = await gameData();
+      console.log(data.problems)
+      setProblems(data.problems);
+    }
+
+    loadGameData();
+
+  }, []);
+
+  useEffect(() => {
+    if (problems.length === 0) return;
     const problem = problems[currentProblemIndex];
     const word = problem.word;
     const letters = word.split('');
@@ -57,9 +70,10 @@ function App() {
     const targetSlots: Slot[] = SlotHelper.toSlots(emptyLetters);
     const pickerSlots: Slot[] = SlotHelper.toSlots(_.shuffle(insertRandomAlphabetLetters(letters.length).concat(letters)));
     setGameSlots({ targetSlots, pickerSlots });
-  }, [currentProblemIndex]);
+  }, [problems, currentProblemIndex]);
 
   useEffect(() => {
+    if (problems.length === 0) return;
     if (SlotHelper.slotsAreFull(gameSlots.targetSlots)) {
       const problem = problems[currentProblemIndex];
       const word = problem.word;
@@ -103,11 +117,17 @@ function App() {
 
   return (
     <>
-      {renderResult(result)}
-      <div className='wrapper'>
-        <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
-        <button className='remove' onClick={popLetter}>Annuler</button>
-      </div>
+      {
+        problems.length !== 0 && (
+          <>
+            {renderResult(result)}
+            <div className='wrapper'>
+              <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
+              <button className='remove' onClick={popLetter}>Annuler</button>
+            </div>
+          </>
+        )
+      }
     </>
   );
 }
