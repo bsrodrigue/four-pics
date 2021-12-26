@@ -1,0 +1,22 @@
+[
+    {
+        "pictures": [
+            "../img/problems/fairytail/lucy/heart.png",
+            "../img/problems/fairytail/lucy/key.jpeg",
+            "../img/problems/fairytail/lucy/blonde.jpg",
+            "../img/problems/fairytail/lucy/constellation.jpeg"
+        ],
+        "franchise": "fairytail",
+        "word": "lucy"
+    },
+    {
+        "pictures": [
+            "../img/problems/fairytail/natsu/scarf.jpeg",
+            "../img/problems/fairytail/natsu/dragon.jpg",
+            "../img/problems/fairytail/natsu/fire.jpg",
+            "../img/problems/fairytail/natsu/salamander.jpg"
+        ],
+        "franchise": "fairytail",
+        "word": "natsu"
+    }
+]

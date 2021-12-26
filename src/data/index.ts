@@ -1,14 +1,18 @@
 import type { GameData } from '../interfaces';
 
+
+
+
 const data: GameData = {
     problems: [
         {
             pictures: [
-                require('../img/blonde.jpg'),
-                require('../img/constellation.jpeg'),
-                require('../img/heart.png'),
-                require('../img/key.jpeg'),
+                require('../img/problems/fairytail/lucy/blonde.jpg'),
+                require('../img/problems/fairytail/lucy/constellation.jpeg'),
+                require('../img/problems/fairytail/lucy/heart.png'),
+                require('../img/problems/fairytail/lucy/key.jpeg'),
             ],
+            franchise: 'fairytail',
             word: 'lucy',
         }
     ]

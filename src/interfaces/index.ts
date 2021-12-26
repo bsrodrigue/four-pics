@@ -1,6 +1,7 @@
 export interface Problem {
     pictures: string[];
     word: string;
+    franchise: string;
 };
 
 export interface GameData {
