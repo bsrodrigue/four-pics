@@ -1,42 +1,55 @@
-import { Slot } from "../interfaces";
-
-const style = {
-    letterSlot: {
-        backgroundColor: 'grey',
-        border: '2px black solid',
-        height: '15px',
-        width: '15px',
-        padding: '1em',
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: '2em',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-}
+import { Slot, SlotActions } from "../interfaces";
 
 interface Props {
     slot: Slot;
-    pushLetter?: Function;
-    isPicker: boolean;
+    actions: SlotActions;
+    role: 'picker' | 'target';
 }
 
-function LetterSlot(props: Props) {
-    const { slot, pushLetter, isPicker } = props;
-    const { letter, index, selected } = slot;
 
-    return (
-        <>
-            {
-                isPicker ? (
-                    <p onClick={() => { pushLetter && !selected && pushLetter(slot) }} style={style.letterSlot}>{selected ? '' : letter}</p>
-                ) : (
-                    <p onClick={() => { pushLetter && pushLetter(slot) }} style={style.letterSlot}>{selected ? letter : ''}</p>
-                )
+function LetterSlot(props: Props) {
+    const { slot, actions, role } = props;
+    const { letter, selected } = slot;
+
+    function isEmpty() {
+        if (role === 'picker') {
+            if (selected) {
+                return 'empty'
+            } else {
+                return '';
             }
-        </>
-    )
+        }
+    }
+
+    function click() {
+        switch (role) {
+            case 'target':
+                break;
+            case 'picker':
+                actions?.pushLetter(slot);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    function output() {
+        let output = '';
+        switch (role) {
+            case 'target':
+                output = selected ? letter : '';
+                break;
+            case 'picker':
+                output = selected ? '' : letter;
+                break;
+            default:
+                break;
+        }
+        return output;
+    }
+
+    return (<p onClick={click} className={`slot slot-${role} slot-${role}-${isEmpty()}`}>{output()}</p>);
 }
 
 export default LetterSlot;

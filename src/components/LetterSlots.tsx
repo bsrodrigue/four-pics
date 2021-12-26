@@ -1,13 +1,15 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { Slot } from '../interfaces';
+import { Slot, SlotActions } from '../interfaces';
 import LetterSlot from './LetterSlot';
 
 interface Props {
+    role: 'picker' | 'target';
+    actions: SlotActions;
     slots: Slot[];
 }
 
 function LetterSlots(props: Props) {
-    const { slots } = props;
+    const { role, slots, actions, } = props;
 
     return (
         <Container>
@@ -16,7 +18,7 @@ function LetterSlots(props: Props) {
                     slots.map((slot: Slot, index: number) => {
                         return (
                             <Col key={index} style={{ display: 'flex', justifyContent: 'center' }} >
-                                <LetterSlot isPicker={false} slot={slot} />
+                                <LetterSlot role={role} slot={slot} actions={actions} />
                             </Col>
                         )
                     })

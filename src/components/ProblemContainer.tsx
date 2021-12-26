@@ -1,35 +1,20 @@
-import { Container, Row, Col } from "react-bootstrap";
 import { LetterSlots, ProblemPictures } from ".";
-import LetterSlot from './LetterSlot';
-import { GameSlots, Problem, Slot } from "../interfaces";
+import { GameSlots, Problem, Slot, SlotActions } from "../interfaces";
 
 interface Props {
     problem: Problem;
     slots: GameSlots;
-    pushLetter: Function;
+    actions: SlotActions;
 }
 
-
 function ProblemContainer(props: Props) {
-    const { problem: { pictures }, slots: { targetSlots, pickerSlots }, pushLetter } = props;
+    const { problem: { pictures }, slots: { targetSlots, pickerSlots }, actions } = props;
     return (
         <>
             <ProblemPictures pictures={pictures} />
-            <LetterSlots slots={targetSlots} />
+            <LetterSlots actions={actions} role="target" slots={targetSlots} />
             <hr />
-            <Container>
-                <Row>
-                    {
-                        pickerSlots.map((slot: Slot, index: number) => {
-                            return (
-                                <Col key={index}>
-                                    <LetterSlot isPicker pushLetter={pushLetter} slot={slot} />
-                                </Col>
-                            )
-                        })
-                    }
-                </Row>
-            </Container>
+            <LetterSlots actions={actions} role="picker" slots={pickerSlots} />
         </>
     )
 }

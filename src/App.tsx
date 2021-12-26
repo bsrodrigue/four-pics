@@ -4,17 +4,12 @@ import { ProblemContainer } from './components';
 import data from './data';
 import { GameSlots, Problem, Slot } from './interfaces';
 import { insertRandomAlphabetLetters, SlotHelper } from './tools';
-import { Alert, Container } from 'react-bootstrap';
+import { Alert, Container, Image } from 'react-bootstrap';
+import './App.css'
 
 const INITIAL_PROBLEMS: Problem[] = data.problems;
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
-
-
-const style = {
-  app: {
-  }
-}
 
 function App() {
   const [problems, setProblems] = useState<Problem[]>(INITIAL_PROBLEMS);
@@ -84,7 +79,7 @@ function App() {
   function renderResult(result: string) {
     switch (result) {
       case 'yes':
-        return (<Alert variant='success'>Correct !</Alert>);
+        return (<SuccessDialog />);
       case 'no':
         return (<Alert variant='danger'>Incorrect !</Alert>);
       default:
@@ -92,14 +87,28 @@ function App() {
     }
   }
 
-  return (
-    <Container>
-      <div style={style.app}>
-        {renderResult(result)}
-        <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} pushLetter={pushLetter} />
-        <button className='remove' onClick={popLetter}>Remove</button>
+  function SuccessDialog() {
+
+    return (
+      <div className='success-dialog'>
+        <h1>Correct!</h1>
+        <Image src={require('./img/correct.gif')}></Image>
+        <button>
+          Continuer
+        </button>
+
       </div>
-    </Container>
+    );
+  }
+
+  return (
+    <>
+      {renderResult(result)}
+      <div className='wrapper'>
+        <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
+        <button className='remove' onClick={popLetter}>Annuler</button>
+      </div>
+    </>
   );
 }
 

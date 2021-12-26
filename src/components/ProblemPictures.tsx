@@ -1,5 +1,4 @@
 import { Col, Container, Row, Image } from 'react-bootstrap';
-import { Problem } from '../interfaces';
 
 const PICTURE_DIMENSION = '100%';
 const PICTURE_WIDTH = PICTURE_DIMENSION;
@@ -12,20 +11,20 @@ function ProblemPictures(props: Props) {
     const { pictures } = props;
     return (
         <Container style={{ width: '100%', margin: '2em auto' }} fluid>
-            <Row style={{ gap: '1em' }} >
+            <Row style={{ gap: '0em' }} >
                 <Col>
-                    <Image width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[0]} />
+                    <Image className='picture' width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[0]} />
                 </Col>
                 <Col>
-                    <Image width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[1]} />
+                    <Image className='picture' width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[1]} />
                 </Col>
             </Row>
-            <Row style={{ gap: '1em' }} >
+            <Row style={{ gap: '0em' }} >
                 <Col>
-                    <Image width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[2]} />
+                    <Image className='picture' width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[2]} />
                 </Col>
                 <Col>
-                    <Image width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[3]} />
+                    <Image className='picture' width={PICTURE_WIDTH} style={{ aspectRatio: '1/1' }} src={pictures[3]} />
                 </Col>
             </Row>
         </Container>

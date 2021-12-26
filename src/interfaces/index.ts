@@ -17,3 +17,8 @@ export interface GameSlots {
     targetSlots: Slot[];
     pickerSlots: Slot[];
 }
+
+export interface SlotActions {
+    pushLetter: Function;
+    popLetter: Function;
+}
