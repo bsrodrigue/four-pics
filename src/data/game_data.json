@@ -1,6 +1,16 @@
 [
     {
         "pictures": [
+            "/img/problems/naruto/naruto/fox.jpg",
+            "/img/problems/naruto/naruto/ramen.jpg",
+            "/img/problems/naruto/naruto/wind.png",
+            "/img/problems/naruto/naruto/clones.jpg"
+        ],
+        "franchise": "naruto",
+        "word": "naruto"
+    },
+    {
+        "pictures": [
             "/img/problems/fairytail/lucy/heart.png",
             "/img/problems/fairytail/lucy/key.jpeg",
             "/img/problems/fairytail/lucy/blonde.jpg",
@@ -8,6 +18,16 @@
         ],
         "franchise": "fairytail",
         "word": "lucy"
+    },
+    {
+        "pictures": [
+            "/img/problems/fairytail/grey/demon.jpg",
+            "/img/problems/fairytail/grey/necklace.jpg",
+            "/img/problems/fairytail/grey/ice.jpg",
+            "/img/problems/fairytail/grey/naked.jpg"
+        ],
+        "franchise": "fairytail",
+        "word": "grey"
     },
     {
         "pictures": [

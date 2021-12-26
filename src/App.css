@@ -63,7 +63,7 @@ body {
 .picture {
   background-color: white;
   border: 5px grey solid;
-  margin: 1em 0;
+  margin-bottom: 1em;
   border-radius: 1em;
 }
 

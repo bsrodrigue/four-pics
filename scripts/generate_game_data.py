@@ -28,9 +28,5 @@ for franchise in os.listdir(GAME_PICTURES_DIR):
         game_data.append(problem_data)
 
 
-output_game_data = json.dumps(game_data, indent=4)
-
 with open(DESTINATION_FILE, "w") as outfile:
     json.dump(game_data, outfile, indent=4)
-
-print(output_game_data)

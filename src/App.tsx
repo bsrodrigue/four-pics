@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { ProblemContainer } from './components';
-import { gameData } from './data';
+import { data } from './data';
 import { GameSlots, Problem, Slot } from './interfaces';
 import { insertRandomAlphabetLetters, SlotHelper } from './tools';
-import { Alert, Container, Image } from 'react-bootstrap';
+import { Alert, Image } from 'react-bootstrap';
 import './App.css'
 
 
-const INITIAL_PROBLEMS: Problem[] = [];
+const INITIAL_PROBLEMS: Problem[] = _.shuffle(data);
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
 
@@ -51,17 +51,6 @@ function App() {
 
 
   useEffect(() => {
-    async function loadGameData() {
-      const data = await gameData();
-      console.log(data.problems)
-      setProblems(data.problems);
-    }
-
-    loadGameData();
-
-  }, []);
-
-  useEffect(() => {
     if (problems.length === 0) return;
     const problem = problems[currentProblemIndex];
     const word = problem.word;
@@ -101,14 +90,29 @@ function App() {
     }
   }
 
+
   function SuccessDialog() {
+    const isLastProblem = () => currentProblemIndex === problems.length - 1;
+
+    function nextProblem() {
+      if (isLastProblem()) {
+        setCurrentProblemIndex(0);
+        setResult('');
+      } else {
+        setCurrentProblemIndex(currentProblemIndex + 1);
+        setResult('');
+      }
+    }
+
 
     return (
       <div className='success-dialog'>
         <h1>Correct!</h1>
         <Image src={require('./img/correct.gif')}></Image>
-        <button>
-          Continuer
+        <button onClick={nextProblem}>
+          {
+            isLastProblem() ? 'Rejouer' : 'Continuer'
+          }
         </button>
 
       </div>
@@ -120,11 +124,19 @@ function App() {
       {
         problems.length !== 0 && (
           <>
-            {renderResult(result)}
-            <div className='wrapper'>
-              <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
-              <button className='remove' onClick={popLetter}>Annuler</button>
-            </div>
+            {
+              result === 'yes' ? (
+                <>
+                  {renderResult(result)}
+                </>
+              ) : (
+
+                <div className='wrapper'>
+                  <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
+                  <button className='remove' onClick={popLetter}>Annuler</button>
+                </div>
+              )
+            }
           </>
         )
       }
