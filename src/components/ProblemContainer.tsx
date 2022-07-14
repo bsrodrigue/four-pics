@@ -1,5 +1,5 @@
 import { LetterSlots, ProblemPictures } from ".";
-import { GameSlots, Problem, Slot, SlotActions } from "../interfaces";
+import { GameSlots, Problem, SlotActions } from "../interfaces";
 
 interface Props {
     problem: Problem;

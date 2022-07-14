@@ -1,23 +1,22 @@
-import { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { Alert, Image } from 'react-bootstrap';
 import { ProblemContainer } from './components';
-import { data } from './data';
+import { fetchProblems } from './data';
 import { GameSlots, Problem, Slot } from './interfaces';
 import { insertRandomAlphabetLetters, SlotHelper } from './tools';
-import { Alert, Image } from 'react-bootstrap';
-import './App.css'
+import './App.css';
 
-
-const INITIAL_PROBLEMS: Problem[] = _.shuffle(data);
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
 
 function App() {
-  const [problems, setProblems] = useState<Problem[]>(INITIAL_PROBLEMS);
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(FIRST_PROBLEM);
   const [gameSlots, setGameSlots] = useState<GameSlots>(INITIAL_GAME_SLOTS);
+  const [gameIsLoading, setGameIsLoading] = useState<boolean>(false);
   const [result, setResult] = useState<string>('');
-
+  const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
 
   function pushLetter(slot: Slot) {
     let targetSlots = [...gameSlots.targetSlots];
@@ -49,6 +48,13 @@ function App() {
     setGameSlots(newGameSlots);
   }
 
+  useEffect(() => {
+    setGameIsLoading(true)
+    fetchProblems().then((problems: Problem[]) => {
+      setGameIsLoading(false);
+      setProblems(problems);
+    });
+  }, []);
 
   useEffect(() => {
     if (problems.length === 0) return;
@@ -75,8 +81,7 @@ function App() {
     } else {
       setResult('');
     }
-
-  }, [SlotHelper.slotsAreFull(gameSlots.targetSlots)]);
+  }, [slotsAreFull, currentProblemIndex, problems, gameSlots.targetSlots]);
 
 
   function renderResult(result: string) {
@@ -120,27 +125,39 @@ function App() {
   }
 
   return (
-    <>
+    <main>
       {
-        problems.length !== 0 && (
+        gameIsLoading ? (
+          <div className='loading-message'>
+            <p className='message'>CHARGEMENT...</p>
+            <small>Fait avec &#10084;&#65039; par BADINI Rachid Rodrigue</small>
+          </div>
+        ) : (
           <>
             {
-              result === 'yes' ? (
+              (problems.length !== 0 && (
                 <>
-                  {renderResult(result)}
-                </>
-              ) : (
+                  {
+                    result === 'yes' ? (
+                      <>
+                        {renderResult(result)}
+                      </>
+                    ) : (
 
-                <div className='wrapper'>
-                  <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
-                  <button className='remove' onClick={popLetter}>Annuler</button>
-                </div>
-              )
+                      <div className='wrapper'>
+                        <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
+                        <button className='remove' onClick={popLetter}>Annuler</button>
+                      </div>
+                    )
+                  }
+                </>
+              )) ||
+              <p className='message'>PAS DE CONTENU...</p>
             }
           </>
         )
       }
-    </>
+    </main>
   );
 }
 
