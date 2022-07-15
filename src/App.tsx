@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { Alert, Image } from 'react-bootstrap';
-import './App.css';
 import { ProblemContainer } from './components';
 import { useFetchProblems } from './hooks/api/useFetchProblems';
 import { GameSlots, Slot } from './interfaces';
 import { insertRandomAlphabetLetters, SlotHelper } from './tools';
+import './App.css';
 
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
