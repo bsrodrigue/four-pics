@@ -14,13 +14,6 @@
     margin: 0 auto;
 }
 
-main {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 /*I.2 - Typography*/
 
@@ -30,15 +23,6 @@ body {
 
 .loading-message {
     color: white;
-}
-
-.loading-message small {
-    font-size: 1.5em;
-    font-style: italic;
-}
-
-.message {
-    font-size: 5em;
 }
 
 
