@@ -1,14 +1,18 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+import { GamePage, WelcomePage } from './pages';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-    </Routes>
-  </BrowserRouter>
+  <div className='wrapper app-container'>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/game/all" element={<GamePage />} />
+      </Routes>
+    </BrowserRouter>
+  </div>
   ,
   document.getElementById('root')
 );

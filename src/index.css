@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/*I - Global*/
+
+
+/*I.1 - Layout*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: clamp(300px, 90vw, 500px);
+    margin: 0 auto;
+}
+
+.app-container {
+    display: flex;
+    padding: 1em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*I.2 - Typography*/
+
+body {
+    font-size: 12px;
+    color: white;
+}
+
+.game-title {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.guess-name {
+    text-align: center;
+    font-style: italic;
+}
+
+.game-mode-links {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1em;
+}
+
+.game-mode-link {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: white;
+    background-color: #D61C4E;
+    padding: 0.5em 1em;
+}
+
+.game-mode-link:hover {
+    color: white;
+}
+
+
+/* Loading */
+
+
+/*I.3 - Background*/
+
+body {
+    background-color: #000000;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='30' viewBox='0 0 1000 120'%3E%3Cg fill='none' stroke='%23222' stroke-width='10' %3E%3Cpath d='M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 45c0 0 125-30 250-30S0 45 0 45s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 105c0 0 125-30 250-30S0 105 0 105s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 15c0 0 125-30 250-30S0 15 0 15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500-15c0 0 125-30 250-30S0-15 0-15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 135c0 0 125-30 250-30S0 135 0 135s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+/*II.1 Slots*/
+
+.slot {
+    background-color: grey;
+    border-radius: 1em;
+    border: 2px black solid;
+    height: 15px;
+    width: 15px;
+    padding: 1em;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.slot-target {
+    border: 2px white solid;
+    background-color: black;
+    color: white;
+    height: 12px;
+    width: 12px;
+    padding: 0.8em;
+}
+
+.slot-picker {
+    background-color: white;
+    color: black;
+}
+
+.slot-picker-empty {
+    background-color: grey;
+    opacity: 0.5;
+}
+
+
+/*II.2 Pictures*/
+
+.picture {
+    background-color: white;
+    border: 5px grey solid;
+    margin-bottom: 1em;
+    border-radius: 1em;
+}
+
+
+/*II.3 Dialog*/
+
+.success-dialog {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.822);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-transform: uppercase;
+}
+
+.success-dialog h1 {
+    color: rgb(0, 255, 0);
+}
+
+.success-dialog button {
+    color: white;
+    background-color: rgb(0, 99, 0);
+    border: none;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+
+/*II.4 Button*/
+
+.remove {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 1em;
+    border-radius: 1em 0 0 0;
+}

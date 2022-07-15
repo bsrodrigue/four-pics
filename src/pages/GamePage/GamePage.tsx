@@ -10,13 +10,18 @@ import './GamePage.css';
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
 
-export function GamePage() {
+interface Props {
+    franchise?: string;
+};
+
+export function GamePage(props: Props) {
+    const { franchise } = props;
     const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(FIRST_PROBLEM);
     const [gameSlots, setGameSlots] = useState<GameSlots>(INITIAL_GAME_SLOTS);
     const [result, setResult] = useState<string>('');
     const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
 
-    const { problems, isLoading } = useFetchProblems("fairytail");
+    const { problems, isLoading } = useFetchProblems(franchise);
 
 
     function pushLetter(slot: Slot) {
@@ -106,7 +111,7 @@ export function GamePage() {
         return (
             <div className='success-dialog'>
                 <h1>Correct!</h1>
-                <img src='/img/correct.gif' alt="success"></img>
+                <img height={200} src='/img/dancing_2.gif' alt="success"></img>
                 <button onClick={nextProblem}>
                     {
                         isLastProblem() ? 'Rejouer' : 'Continuer'
@@ -121,9 +126,9 @@ export function GamePage() {
         <main>
             {
                 isLoading ? (
-                    <div className='loading-message'>
-                        <p className='message'>CHARGEMENT...</p>
-                        <small>Fait avec &#10084;&#65039; par BADINI Rachid Rodrigue</small>
+                    <div className="loading-page">
+                        <img height={350} src='/img/dancing_4.gif' alt="success"></img>
+                        <h1 className='loading-message'>CHARGEMENT...</h1>
                     </div>
                 ) : (
                     <>
