@@ -1,22 +1,22 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { Alert, Image } from 'react-bootstrap';
-import { ProblemContainer } from './components';
-import { fetchProblems } from './data';
-import { GameSlots, Problem, Slot } from './interfaces';
-import { insertRandomAlphabetLetters, SlotHelper } from './tools';
 import './App.css';
+import { ProblemContainer } from './components';
+import { useFetchProblems } from './hooks/api/useFetchProblems';
+import { GameSlots, Slot } from './interfaces';
+import { insertRandomAlphabetLetters, SlotHelper } from './tools';
 
 const FIRST_PROBLEM = 0;
 const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
 
 function App() {
-  const [problems, setProblems] = useState<Problem[]>([]);
   const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(FIRST_PROBLEM);
   const [gameSlots, setGameSlots] = useState<GameSlots>(INITIAL_GAME_SLOTS);
-  const [gameIsLoading, setGameIsLoading] = useState<boolean>(false);
   const [result, setResult] = useState<string>('');
   const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
+
+  const { problems, isLoading } = useFetchProblems("fairytail");
 
   function pushLetter(slot: Slot) {
     let targetSlots = [...gameSlots.targetSlots];
@@ -48,13 +48,7 @@ function App() {
     setGameSlots(newGameSlots);
   }
 
-  useEffect(() => {
-    setGameIsLoading(true)
-    fetchProblems().then((problems: Problem[]) => {
-      setGameIsLoading(false);
-      setProblems(problems);
-    });
-  }, []);
+
 
   useEffect(() => {
     if (problems.length === 0) return;
@@ -127,7 +121,7 @@ function App() {
   return (
     <main>
       {
-        gameIsLoading ? (
+        isLoading ? (
           <div className='loading-message'>
             <p className='message'>CHARGEMENT...</p>
             <small>Fait avec &#10084;&#65039; par BADINI Rachid Rodrigue</small>
