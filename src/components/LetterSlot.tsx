@@ -26,6 +26,7 @@ function LetterSlot(props: Props) {
             case 'target':
                 break;
             case 'picker':
+                if (isEmpty()) return;
                 actions?.pushLetter(slot);
                 break;
             default:
