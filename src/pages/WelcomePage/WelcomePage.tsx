@@ -4,7 +4,7 @@ export function WelcomePage() {
 
     return (
         <>
-            <img height={300} width={200} src="/img/dancing_1.gif" alt="" />
+            <img height={250} src="/img/dancing_1.gif" alt="" />
             <br />
             <h1 className="game-title">OTAPIC</h1>
             <h3 className="guess-name">DEVINE LE NOM DU PERSONNAGE !</h3>
@@ -15,7 +15,7 @@ export function WelcomePage() {
                 <Link className="game-mode-link" to="/game/select">CHOISIR UN MANGA OU ANIME</Link>
             </div>
             <br />
-            <small>Fait avec &#10084;&#65039; par BADINI Rachid Rodrigue</small>
+            <small>Fait avec &#10084;&#65039; par Miyamoto</small>
         </>
     );
 }

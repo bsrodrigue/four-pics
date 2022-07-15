@@ -18,7 +18,7 @@
 
 .app-container {
     display: flex;
-    padding: 1em;
+    padding: 0 1em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -58,6 +58,7 @@ body {
 
 .game-mode-link:hover {
     color: white;
+    background-color: #000000;
 }
 
 

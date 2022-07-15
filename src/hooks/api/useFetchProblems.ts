@@ -1,6 +1,7 @@
 import { Problem } from './../../interfaces/index';
 import { useState, useEffect } from 'react';
 import { getAllProblems, getFranchiseProblems } from '../../api';
+import _ from 'lodash';
 
 export function useFetchProblems(franchise?: string) {
     const [problems, setProblems] = useState<Problem[]>([]);
@@ -11,7 +12,7 @@ export function useFetchProblems(franchise?: string) {
             try {
                 setIsLoading(true);
                 const result = franchise ? await getFranchiseProblems(franchise) : await getAllProblems();
-                if (result.length !== 0) setProblems(result);
+                if (result.length !== 0) setProblems(_.shuffle(result));
             } catch (error) {
 
             }

@@ -62,7 +62,6 @@ export class SlotHelper {
         slots.forEach((slot: Slot) => {
             result = result.concat(slot.letter);
         })
-        console.log(result);
         return result;
     }
 }
