@@ -12,7 +12,7 @@ export function WelcomePage() {
             <h4>MODES DE JEU</h4>
             <div className="game-mode-links">
                 <Link className="game-mode-link" to="/game/all">TOUS LES MANGAS ET ANIME</Link>
-                <Link className="game-mode-link" to="/game/select">CHOISIR UN MANGA OU ANIME</Link>
+                <Link className="game-mode-link" to="/game/list">CHOISIR UN MANGA OU ANIME</Link>
             </div>
             <br />
             <small>Fait avec &#10084;&#65039; par Miyamoto</small>

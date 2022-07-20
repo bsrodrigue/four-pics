@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { GamePage, WelcomePage } from './ui/pages';
+import { GamePage, WelcomePage, UniverseListPage } from './ui/pages';
 import GameStateProvider from './context/providers/GameStateProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -12,6 +12,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/game/all" element={<GamePage />} />
+          <Route path="/game/list" element={<UniverseListPage />} />
         </Routes>
       </BrowserRouter>
     </GameStateProvider>

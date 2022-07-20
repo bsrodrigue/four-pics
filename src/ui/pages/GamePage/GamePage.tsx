@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useGameState from "../../../context/hooks/useGameState";
 import { useFetchProblems } from "../../../hooks/api/useFetchProblems";
 import { SlotHelper } from "../../../utils";
+import { LoadingDialog } from "../../components";
 import { GameFragment } from "../../components/Fragments/GameFragment";
 import './GamePage.css';
 
@@ -48,10 +49,7 @@ export function GamePage({ franchise }: Props) {
         <main>
             {
                 isLoading ? (
-                    <div className="loading-page">
-                        <img height={350} src='/img/dancing_4.gif' alt="success"></img>
-                        <h1 className='loading-message'>CHARGEMENT...</h1>
-                    </div>
+                    <LoadingDialog />
                 ) : (
                     <>
                         {
