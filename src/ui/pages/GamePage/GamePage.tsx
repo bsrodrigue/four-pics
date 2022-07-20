@@ -7,17 +7,14 @@ import { SlotHelper, insertRandomAlphabetLetters } from "../../../utils";
 import { ProblemContainer } from "../../components";
 import './GamePage.css';
 
-const FIRST_PROBLEM = 0;
-const INITIAL_GAME_SLOTS: LetterSlotsState = { targetSlots: [], pickerSlots: [] };
-
 interface Props {
     franchise?: string;
 };
 
-export function GamePage(props: Props) {
-    const { franchise } = props;
-    const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(FIRST_PROBLEM);
-    const [gameSlots, setGameSlots] = useState<LetterSlotsState>(INITIAL_GAME_SLOTS);
+// TODO: divide into hooks and components
+export function GamePage({ franchise }: Props) {
+    const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(0);
+    const [gameSlots, setGameSlots] = useState<LetterSlotsState>({ targetSlots: [], pickerSlots: [] });
     const [result, setResult] = useState<string>('');
     const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
 
