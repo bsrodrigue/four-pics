@@ -1,125 +1,50 @@
-import _ from "lodash";
-import { useEffect, useState } from "react";
-import { Alert } from "react-bootstrap";
+import { useEffect } from "react";
+import useGameState from "../../../context/hooks/useGameState";
 import { useFetchProblems } from "../../../hooks/api/useFetchProblems";
-import { LetterSlot, LetterSlotsState } from "../../../types";
-import { SlotHelper, insertRandomAlphabetLetters } from "../../../utils";
-import { ProblemContainer } from "../../components";
+import { SlotHelper } from "../../../utils";
+import { GameFragment } from "../../components/Fragments/GameFragment";
 import './GamePage.css';
 
 interface Props {
     franchise?: string;
 };
 
-// TODO: divide into hooks and components
 export function GamePage({ franchise }: Props) {
-    const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(0);
-    const [gameSlots, setGameSlots] = useState<LetterSlotsState>({ targetSlots: [], pickerSlots: [] });
-    const [result, setResult] = useState<string>('');
-    const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
+    const { currentProblemIndex, gameSlots, result, setCurrentProblemIndex, setGameSlots, setResult } = useGameState();
+    const { problems: puzzles, isLoading } = useFetchProblems(franchise);
 
-    const { problems, isLoading } = useFetchProblems(franchise);
-
-
-    function pushLetter(slot: LetterSlot) {
-        let targetSlots = [...gameSlots.targetSlots];
-        let pickerSlots = [...gameSlots.pickerSlots];
-        const selected = true;
-        const newSlotState = { ...slot, selected };
-        const index: number = SlotHelper.getFirstEmptyIndex(targetSlots);
-        if (index === -1) return;
-        targetSlots[index] = newSlotState;
-        pickerSlots[slot.index] = newSlotState;
-        const newGameSlots: LetterSlotsState = {
-            targetSlots, pickerSlots,
-        };
-        setGameSlots(newGameSlots);
-    }
-
-    function popLetter() {
-        let targetSlots = [...gameSlots.targetSlots];
-        let pickerSlots = [...gameSlots.pickerSlots];
-        const selected = false;
-        const index: number = SlotHelper.getLastNonEmptyIndex(targetSlots);
-        if (index === -1) return;
-        const targetSlot = targetSlots[index];
-        pickerSlots[targetSlot.index] = { ...targetSlot, selected };
-        targetSlots[index] = { ...targetSlot, selected, letter: '' };
-        const newGameSlots: LetterSlotsState = {
-            targetSlots, pickerSlots,
-        };
-        setGameSlots(newGameSlots);
-    }
+    const puzzlesAreEmpty = puzzles.length === 0;
+    const isLastPuzzle = () => currentProblemIndex === puzzles.length - 1;
 
     useEffect(() => {
-        if (problems.length === 0) return;
-        const problem = problems[currentProblemIndex];
-        const word = problem.word;
-        const letters = word.split('');
-        const emptyLetters = Array(word.length).fill('');
-        const targetSlots: LetterSlot[] = SlotHelper.toSlots(emptyLetters);
-        const pickerSlots: LetterSlot[] = SlotHelper.toSlots(_.shuffle(insertRandomAlphabetLetters(letters.length).concat(letters)));
-        setGameSlots({ targetSlots, pickerSlots });
-    }, [problems, currentProblemIndex]);
+        if (puzzlesAreEmpty) return;
+        SlotHelper.setupCurrentPuzzle(puzzles[currentProblemIndex], setGameSlots);
+    }, [puzzles, currentProblemIndex, setGameSlots, puzzlesAreEmpty]);
 
     useEffect(() => {
-        if (problems.length === 0) return;
+        if (puzzlesAreEmpty) return;
         if (SlotHelper.slotsAreFull(gameSlots.targetSlots)) {
-            const problem = problems[currentProblemIndex];
-            const word = problem.word;
-            const playerWord = SlotHelper.toLetters(gameSlots.targetSlots);
-            if (word === playerWord) {
+            SlotHelper.checkIfResultIsCorrect(puzzles[currentProblemIndex], gameSlots.targetSlots, () => {
                 setResult('yes');
-            } else {
+            }, () => {
                 setResult('no');
-            }
+            })
         } else {
             setResult('');
         }
-    }, [slotsAreFull, currentProblemIndex, problems, gameSlots.targetSlots]);
+    }, [currentProblemIndex, gameSlots.targetSlots, puzzles, puzzlesAreEmpty, setResult]);
 
-
-    function renderResult(result: string) {
-        switch (result) {
-            case 'yes':
-                return (<SuccessDialog />);
-            case 'no':
-                return (<Alert variant='danger'>Incorrect !</Alert>);
-            default:
-                return (<></>)
+    function moveToNextPuzzle() {
+        if (isLastPuzzle()) {
+            setCurrentProblemIndex(0);
+            setResult('');
+        } else {
+            setCurrentProblemIndex(currentProblemIndex + 1);
+            setResult('');
         }
     }
 
-
-    function SuccessDialog() {
-        const isLastProblem = () => currentProblemIndex === problems.length - 1;
-
-        function nextProblem() {
-            if (isLastProblem()) {
-                setCurrentProblemIndex(0);
-                setResult('');
-            } else {
-                setCurrentProblemIndex(currentProblemIndex + 1);
-                setResult('');
-            }
-        }
-
-
-        return (
-            <div className='success-dialog'>
-                <h1>Correct!</h1>
-                <img height={200} src='/img/dancing_2.gif' alt="success"></img>
-                <button onClick={nextProblem}>
-                    {
-                        isLastProblem() ? 'Rejouer' : 'Continuer'
-                    }
-                </button>
-
-            </div>
-        );
-    }
     return (
-
         <main>
             {
                 isLoading ? (
@@ -130,22 +55,8 @@ export function GamePage({ franchise }: Props) {
                 ) : (
                     <>
                         {
-                            (problems.length !== 0 && (
-                                <>
-                                    {
-                                        result === 'yes' ? (
-                                            <>
-                                                {renderResult(result)}
-                                            </>
-                                        ) : (
-
-                                            <div className='wrapper'>
-                                                <ProblemContainer problem={problems[currentProblemIndex]} slots={gameSlots} actions={{ pushLetter, popLetter }} />
-                                                <button className='remove' onClick={popLetter}>Annuler</button>
-                                            </div>
-                                        )
-                                    }
-                                </>
+                            (!puzzlesAreEmpty && (
+                                <GameFragment result={result} puzzle={puzzles[currentProblemIndex]} slots={gameSlots} isLastPuzzle={isLastPuzzle()} moveToNextPuzzle={moveToNextPuzzle} />
                             )) ||
                             <p className='message'>PAS DE CONTENU...</p>
                         }
@@ -154,5 +65,4 @@ export function GamePage({ franchise }: Props) {
             }
         </main>
     )
-
 }

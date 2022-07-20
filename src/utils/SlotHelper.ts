@@ -1,4 +1,6 @@
-import { LetterSlot } from "../types";
+import _ from "lodash";
+import { LetterSlot, LetterSlotsState, Puzzle } from "../types";
+import { insertRandomAlphabetLetters } from "./insertRandomAlphabetLetters";
 
 export class SlotHelper {
     public static getFirstEmptyIndex(slots: LetterSlot[]): number {
@@ -52,5 +54,54 @@ export class SlotHelper {
             result = result.concat(slot.letter);
         })
         return result;
+    }
+
+    public static pushLetter(gameSlots: LetterSlotsState, slot: LetterSlot, onLetterPushed: (newGameSlots: LetterSlotsState) => void) {
+        let targetSlots = [...gameSlots.targetSlots];
+        let pickerSlots = [...gameSlots.pickerSlots];
+        const selected = true;
+        const newSlotState = { ...slot, selected };
+        const index: number = SlotHelper.getFirstEmptyIndex(targetSlots);
+        if (index === -1) return;
+        targetSlots[index] = newSlotState;
+        pickerSlots[slot.index] = newSlotState;
+        const newGameSlots: LetterSlotsState = {
+            targetSlots, pickerSlots,
+        };
+        onLetterPushed(newGameSlots);
+    }
+
+    public static popLetter(gameSlots: LetterSlotsState, onLetterPushed: (newGameSlots: LetterSlotsState) => void) {
+        let targetSlots = [...gameSlots.targetSlots];
+        let pickerSlots = [...gameSlots.pickerSlots];
+        const selected = false;
+        const index: number = SlotHelper.getLastNonEmptyIndex(targetSlots);
+        if (index === -1) return;
+        const targetSlot = targetSlots[index];
+        pickerSlots[targetSlot.index] = { ...targetSlot, selected };
+        targetSlots[index] = { ...targetSlot, selected, letter: '' };
+        const newGameSlots: LetterSlotsState = {
+            targetSlots, pickerSlots,
+        };
+        onLetterPushed(newGameSlots);
+    }
+
+    public static setupCurrentPuzzle(puzzle: Puzzle, onPuzzleSetup: Function) {
+        const word = puzzle.word;
+        const letters = word.split('');
+        const emptyLetters = Array(word.length).fill('');
+        const targetSlots: LetterSlot[] = SlotHelper.toSlots(emptyLetters);
+        const pickerSlots: LetterSlot[] = SlotHelper.toSlots(_.shuffle(insertRandomAlphabetLetters(letters.length).concat(letters)));
+        onPuzzleSetup({ targetSlots, pickerSlots });
+    }
+
+    public static checkIfResultIsCorrect(puzzle: Puzzle, targetSlots: Array<LetterSlot>, onCorrect: Function, onIncorrect: Function) {
+        const word = puzzle.word;
+        const playerWord = SlotHelper.toLetters(targetSlots);
+        if (word === playerWord) {
+            onCorrect();
+        } else {
+            onIncorrect();
+        }
     }
 }

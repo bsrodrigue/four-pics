@@ -1,24 +1,21 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { LetterSlot as Slot } from '../../types';
-import LetterSlot from './LetterSlot';
+import { LetterSlot } from '../../../../types';
+import { LetterSlotContainer } from '../LetterSlotContainer';
 
 interface Props {
     role: 'picker' | 'target';
-    actions: any;
-    slots: Slot[];
+    slots: LetterSlot[];
 }
 
-function LetterSlots(props: Props) {
-    const { role, slots, actions, } = props;
-
+export default function LetterSlotContainers({ role, slots }: Props) {
     return (
         <Container>
             <Row>
                 {
-                    slots.map((slot: Slot, index: number) => {
+                    slots.map((slot: LetterSlot, index: number) => {
                         return (
                             <Col key={index} style={{ display: 'flex', justifyContent: 'center' }} >
-                                <LetterSlot role={role} slot={slot} actions={actions} />
+                                <LetterSlotContainer role={role} slot={slot} />
                             </Col>
                         )
                     })
@@ -27,5 +24,3 @@ function LetterSlots(props: Props) {
         </Container>
     )
 }
-
-export default LetterSlots;

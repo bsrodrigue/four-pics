@@ -7,7 +7,7 @@ interface Props {
     pictures: string[];
 }
 
-function ProblemPictures(props: Props) {
+export default function ProblemPictures(props: Props) {
     const { pictures } = props;
     return (
         <Container style={{ width: '100%', margin: '2em auto' }} fluid>
@@ -30,5 +30,3 @@ function ProblemPictures(props: Props) {
         </Container>
     )
 }
-
-export default ProblemPictures;

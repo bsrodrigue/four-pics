@@ -1,14 +1,15 @@
-import { LetterSlot as Slot } from "../../types";
+import useGameState from "../../../../context/hooks/useGameState";
+import { LetterSlot } from "../../../../types";
+import { SlotHelper } from "../../../../utils";
 
 interface Props {
-    slot: Slot;
-    actions: any;
+    slot: LetterSlot;
     role: 'picker' | 'target';
 }
 
 
-function LetterSlot(props: Props) {
-    const { slot, actions, role } = props;
+export default function LetterSlotContainer({ slot, role }: Props) {
+    const { gameSlots, setGameSlots } = useGameState();
     const { letter, selected } = slot;
 
     function isEmpty() {
@@ -27,7 +28,7 @@ function LetterSlot(props: Props) {
                 break;
             case 'picker':
                 if (isEmpty()) return;
-                actions?.pushLetter(slot);
+                SlotHelper.pushLetter(gameSlots, slot, setGameSlots);
                 break;
             default:
                 break;
@@ -52,5 +53,3 @@ function LetterSlot(props: Props) {
 
     return (<p onClick={click} className={`slot slot-${role} slot-${role}-${isEmpty()}`}>{output()}</p>);
 }
-
-export default LetterSlot;
