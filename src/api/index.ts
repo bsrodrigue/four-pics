@@ -1,5 +1,5 @@
 import { getStorage, ref, getDownloadURL, listAll } from 'firebase/storage';
-import { app } from '../firebase/init';
+import { app } from '../configs/firebase';
 import { Puzzle } from '../types';
 
 const storage = getStorage(app);
