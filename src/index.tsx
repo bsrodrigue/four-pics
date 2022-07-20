@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { GamePage, WelcomePage } from './ui/pages';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import { GamePage, WelcomePage } from './pages';
 
 ReactDOM.render(
   <div className='wrapper app-container'>

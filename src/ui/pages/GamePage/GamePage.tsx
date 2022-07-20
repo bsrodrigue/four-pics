@@ -1,14 +1,14 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
+import { useFetchProblems } from "../../../hooks/api/useFetchProblems";
+import { LetterSlot, LetterSlotsState } from "../../../types";
+import { SlotHelper, insertRandomAlphabetLetters } from "../../../utils";
 import { ProblemContainer } from "../../components";
-import { useFetchProblems } from "../../hooks/api/useFetchProblems";
-import { GameSlots, Slot } from "../../interfaces";
-import { insertRandomAlphabetLetters, SlotHelper } from "../../tools";
 import './GamePage.css';
 
 const FIRST_PROBLEM = 0;
-const INITIAL_GAME_SLOTS: GameSlots = { targetSlots: [], pickerSlots: [] };
+const INITIAL_GAME_SLOTS: LetterSlotsState = { targetSlots: [], pickerSlots: [] };
 
 interface Props {
     franchise?: string;
@@ -17,14 +17,14 @@ interface Props {
 export function GamePage(props: Props) {
     const { franchise } = props;
     const [currentProblemIndex, setCurrentProblemIndex] = useState<number>(FIRST_PROBLEM);
-    const [gameSlots, setGameSlots] = useState<GameSlots>(INITIAL_GAME_SLOTS);
+    const [gameSlots, setGameSlots] = useState<LetterSlotsState>(INITIAL_GAME_SLOTS);
     const [result, setResult] = useState<string>('');
     const slotsAreFull = SlotHelper.slotsAreFull(gameSlots.targetSlots)
 
     const { problems, isLoading } = useFetchProblems(franchise);
 
 
-    function pushLetter(slot: Slot) {
+    function pushLetter(slot: LetterSlot) {
         let targetSlots = [...gameSlots.targetSlots];
         let pickerSlots = [...gameSlots.pickerSlots];
         const selected = true;
@@ -33,7 +33,7 @@ export function GamePage(props: Props) {
         if (index === -1) return;
         targetSlots[index] = newSlotState;
         pickerSlots[slot.index] = newSlotState;
-        const newGameSlots: GameSlots = {
+        const newGameSlots: LetterSlotsState = {
             targetSlots, pickerSlots,
         };
         setGameSlots(newGameSlots);
@@ -48,7 +48,7 @@ export function GamePage(props: Props) {
         const targetSlot = targetSlots[index];
         pickerSlots[targetSlot.index] = { ...targetSlot, selected };
         targetSlots[index] = { ...targetSlot, selected, letter: '' };
-        const newGameSlots: GameSlots = {
+        const newGameSlots: LetterSlotsState = {
             targetSlots, pickerSlots,
         };
         setGameSlots(newGameSlots);
@@ -60,8 +60,8 @@ export function GamePage(props: Props) {
         const word = problem.word;
         const letters = word.split('');
         const emptyLetters = Array(word.length).fill('');
-        const targetSlots: Slot[] = SlotHelper.toSlots(emptyLetters);
-        const pickerSlots: Slot[] = SlotHelper.toSlots(_.shuffle(insertRandomAlphabetLetters(letters.length).concat(letters)));
+        const targetSlots: LetterSlot[] = SlotHelper.toSlots(emptyLetters);
+        const pickerSlots: LetterSlot[] = SlotHelper.toSlots(_.shuffle(insertRandomAlphabetLetters(letters.length).concat(letters)));
         setGameSlots({ targetSlots, pickerSlots });
     }, [problems, currentProblemIndex]);
 

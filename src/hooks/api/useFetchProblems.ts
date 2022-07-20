@@ -1,10 +1,10 @@
-import { Problem } from './../../interfaces/index';
+import { Puzzle } from '../../types/index';
 import { useState, useEffect } from 'react';
 import { getAllProblems, getFranchiseProblems } from '../../api';
 import _ from 'lodash';
 
 export function useFetchProblems(franchise?: string) {
-    const [problems, setProblems] = useState<Problem[]>([]);
+    const [problems, setProblems] = useState<Puzzle[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {

@@ -1,8 +1,8 @@
-import { Slot, SlotActions } from "../interfaces";
+import { LetterSlot as Slot } from "../../types";
 
 interface Props {
     slot: Slot;
-    actions: SlotActions;
+    actions: any;
     role: 'picker' | 'target';
 }
 

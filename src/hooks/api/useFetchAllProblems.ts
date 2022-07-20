@@ -1,9 +1,9 @@
-import { Problem } from './../../interfaces/index';
+import { Puzzle } from '../../types/index';
 import { useState, useEffect } from 'react';
 import { getAllProblems } from '../../api';
 
 export function useFetchAllProblems() {
-    const [problems, setProblems] = useState<Problem[]>([]);
+    const [problems, setProblems] = useState<Puzzle[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {

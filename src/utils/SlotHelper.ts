@@ -1,18 +1,7 @@
-import _ from 'lodash';
-import { Slot } from '../interfaces';
-
-export function insertRandomAlphabetLetters(count: number) {
-    let arr: string[] = [];
-    const alphabet = 'abcdefghijklmnopqurstuvwxyz';
-    for (let i = 0; i < count; i++) {
-        const randomIndex = _.random(0, alphabet.length - 1);
-        arr.push(alphabet[randomIndex]);
-    }
-    return arr;
-}
+import { LetterSlot } from "../types";
 
 export class SlotHelper {
-    public static getFirstEmptyIndex(slots: Slot[]): number {
+    public static getFirstEmptyIndex(slots: LetterSlot[]): number {
         for (let i = 0; i < slots.length; i++) {
             if (slots[i].letter === '') {
                 return i;
@@ -21,7 +10,7 @@ export class SlotHelper {
         return -1;
     }
 
-    public static getFirstNonEmptyIndex(slots: Slot[]): number {
+    public static getFirstNonEmptyIndex(slots: LetterSlot[]): number {
         for (let i = 0; i < slots.length; i++) {
             if (slots[i].letter !== '') {
                 return i;
@@ -30,7 +19,7 @@ export class SlotHelper {
         return -1;
     }
 
-    public static getLastNonEmptyIndex(slots: Slot[]): number {
+    public static getLastNonEmptyIndex(slots: LetterSlot[]): number {
         for (let i = slots.length - 1; i >= 0; i--) {
             if (slots[i].letter !== '') {
                 return i;
@@ -39,7 +28,7 @@ export class SlotHelper {
         return -1;
     }
 
-    public static slotsAreFull(slots: Slot[]) {
+    public static slotsAreFull(slots: LetterSlot[]) {
         let nonEmptySlots = 0;
         const slotCount = slots.length;
         for (let i = 0; i < slotCount; i++) {
@@ -48,8 +37,8 @@ export class SlotHelper {
         return (nonEmptySlots === slotCount);
     }
 
-    public static toSlots(arr: string[], selected: boolean = false): Slot[] {
-        const slotLetters: Slot[] = arr.map((slotLetter: string, index: number) => {
+    public static toSlots(arr: string[], selected: boolean = false): LetterSlot[] {
+        const slotLetters: LetterSlot[] = arr.map((slotLetter: string, index: number) => {
             return {
                 letter: slotLetter, index, selected,
             }
@@ -57,9 +46,9 @@ export class SlotHelper {
         return slotLetters;
     }
 
-    public static toLetters(slots: Slot[]): string {
+    public static toLetters(slots: LetterSlot[]): string {
         let result = '';
-        slots.forEach((slot: Slot) => {
+        slots.forEach((slot: LetterSlot) => {
             result = result.concat(slot.letter);
         })
         return result;

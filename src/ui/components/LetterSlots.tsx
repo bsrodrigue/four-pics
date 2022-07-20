@@ -1,10 +1,10 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { Slot, SlotActions } from '../interfaces';
+import { LetterSlot as Slot } from '../../types';
 import LetterSlot from './LetterSlot';
 
 interface Props {
     role: 'picker' | 'target';
-    actions: SlotActions;
+    actions: any;
     slots: Slot[];
 }
 

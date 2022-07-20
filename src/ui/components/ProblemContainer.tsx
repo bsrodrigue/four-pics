@@ -1,17 +1,17 @@
 import { LetterSlots, ProblemPictures } from ".";
-import { GameSlots, Problem, SlotActions } from "../interfaces";
+import { LetterSlotsState, Puzzle } from "../../types";
 
 interface Props {
-    problem: Problem;
-    slots: GameSlots;
-    actions: SlotActions;
+    problem: Puzzle;
+    slots: LetterSlotsState;
+    actions: any;
 }
 
 function ProblemContainer(props: Props) {
-    const { problem: { pictures, franchise }, slots: { targetSlots, pickerSlots }, actions } = props;
+    const { problem: { pictures, universe }, slots: { targetSlots, pickerSlots }, actions } = props;
     return (
         <>
-            <small style={{ color: 'white' }}>Du Manga/Anime: <span style={{ textTransform: 'uppercase', fontWeight: 'bold' }}>{franchise}</span></small>
+            <small style={{ color: 'white' }}>Du Manga/Anime: <span style={{ textTransform: 'uppercase', fontWeight: 'bold' }}>{universe}</span></small>
             <ProblemPictures pictures={pictures} />
             <LetterSlots actions={actions} role="target" slots={targetSlots} />
             <hr />
