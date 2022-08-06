@@ -1,1 +1,1 @@
-export { default as UniverseListPage } from './UniverseListPage';
+export { default as UniverseListPage } from './UniverseListPage'

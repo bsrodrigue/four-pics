@@ -1,20 +1,19 @@
-
 interface IProps {
-    isLastPuzzle: boolean;
-    moveToNextPuzzle: () => void;
-};
+    isLastPuzzle: boolean
+    moveToNextPuzzle: () => void
+}
 
-export default function SuccessDialog({ isLastPuzzle, moveToNextPuzzle }: IProps) {
+export default function SuccessDialog({
+    isLastPuzzle,
+    moveToNextPuzzle,
+}: IProps) {
     return (
-        <div className='success-dialog'>
+        <div className="success-dialog">
             <h1>Correct!</h1>
-            <img height={200} src='/img/dancing_2.gif' alt="success"></img>
+            <img height={200} src="/img/dancing_2.gif" alt="success" />
             <button onClick={moveToNextPuzzle}>
-                {
-                    isLastPuzzle ? 'Rejouer' : 'Continuer'
-                }
+                {isLastPuzzle ? 'Rejouer' : 'Continuer'}
             </button>
-
         </div>
-    );
+    )
 }

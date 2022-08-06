@@ -1,3 +1,1 @@
-export const globalConfiguration = {
-
-};
+export const globalConfiguration = {}
