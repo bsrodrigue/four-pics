@@ -1,4 +1,4 @@
-export { default as ProblemPictures } from './ProblemPictures';
-export { default as LetterSlots } from './LetterSlots';
-export { default as ProblemContainer } from './ProblemContainer';
-export { default as LetterSlot } from './LetterSlot';
+export { ProblemPictures } from './ProblemPictures'
+export { ProblemContainer } from './ProblemContainer'
+export { LoadingDialog } from './Dialogs/LoadingDialog'
+export { LetterSlotContainer, LetterSlotContainers } from './Slots'
