@@ -22,7 +22,10 @@ export function GamePage({ franchise }: Props) {
   const { problems: puzzles, isLoading } = useFetchProblems(franchise)
 
   const puzzlesAreEmpty = puzzles.length === 0
-  const isLastPuzzle = () => currentProblemIndex === puzzles.length - 1
+
+  function isLastPuzzle() {
+    return currentProblemIndex === (puzzles.length - 1);
+  }
 
   useEffect(() => {
     if (puzzlesAreEmpty) return
@@ -68,7 +71,7 @@ export function GamePage({ franchise }: Props) {
               result={result}
               puzzle={puzzles[currentProblemIndex]}
               slots={gameSlots}
-              isLastPuzzle={isLastPuzzle()}
+              isLastPuzzle={isLastPuzzle}
               moveToNextPuzzle={moveToNextPuzzle}
             />
           )) || <p className='message'>PAS DE CONTENU...</p>}
@@ -77,3 +80,4 @@ export function GamePage({ franchise }: Props) {
     </main>
   )
 }
+

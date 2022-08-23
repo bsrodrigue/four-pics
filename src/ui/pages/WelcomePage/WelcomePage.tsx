@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export default function WelcomePage() {
+
   return (
     <>
       <img height={250} src='/img/dancing_1.gif' alt='' />
@@ -22,3 +23,4 @@ export default function WelcomePage() {
     </>
   )
 }
+
